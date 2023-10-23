@@ -44,7 +44,34 @@ async function login(usuario) {
         AND EMAIL=${usuario.email}
         AND SENHA=${usuario.senha}
       `;
-    
+
+    console.log(result)
+    return result.recordset;
+  } catch (ex) {
+    console.log('ex', ex)
+    return ex;
+  }
+}
+
+async function alterarPonto(registro) {
+  console.log(registro)
+  try {
+    await sql.connect(sqlConfig);
+
+    const result = await sql.query`
+      UPDATE PONTO SET 
+      DATA_REGISTRO = DATEADD(
+                        HOUR,
+                        CAST(${registro.hora} AS INT),
+                        DATEADD(
+                          MINUTE,
+                          CAST(${registro.minuto} AS INT),
+                          CAST(CAST(DATA_REGISTRO AS DATE) AS DATETIME))
+                        )
+      WHERE 0=0
+        AND ID=${registro.id}
+      `;
+
     console.log(result)
     return result.recordset;
   } catch (ex) {
@@ -54,6 +81,7 @@ async function login(usuario) {
 }
 
 async function registrar(usuario) {
+  console.log(usuario)
   try {
     await sql.connect(sqlConfig);
     const result = (await sql.query`
@@ -72,12 +100,12 @@ async function registrar(usuario) {
   }
 }
 
-
 async function obterRegistros(id) {
   try {
     await sql.connect(sqlConfig);
     const result = (await sql.query`
     SELECT 
+      ID AS id,
       USUARIO_ID AS usuarioId,
       DATA_REGISTRO AS dataRegistro,
       TIPO_REGISTRO AS tipoRegistro
@@ -144,4 +172,5 @@ module.exports = {
   obterPagamento,
   login,
   registrar,
+  alterarPonto,
 }

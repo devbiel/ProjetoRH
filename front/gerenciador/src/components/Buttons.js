@@ -8,7 +8,7 @@ export function ButtonRegistro( props ) {
             onPress={props.action}
             disabled={props?.disabled}
         >
-            <Text style={[styles.textRegistro,{textDecoration: props?.disabled ? 'line-through':''}]}>{props.text}</Text>
+            <Text style={[styles.textRegistro,{color: props?.disabled ? '#777':'#000'}]}>{props.text}</Text>
         </Pressable>
     )
 }
@@ -49,7 +49,7 @@ const styles = StyleSheet.create(
             color:'#fff'
         },
         textRegistro:{
-            color:'#000'
+            fontWeight:'bold'
         }
     }
 )

@@ -1,15 +1,25 @@
-import { useState } from 'react';
+import { useEffect, useState,useContext } from 'react';
 import { TextInput } from 'react-native';
 import { StyleSheet, View } from 'react-native';
 import { Api } from '../api';
 import { Dh, Dw } from "../common/Func";
 import { ButtonRegistro, ButtonAction } from "../components/Buttons";
+import { AppContext } from '../context';
 
 export function Login({ navigation }) {
     const [usuario, setUsuario] = useState({
         email: '',
         senha: '',
     });
+    
+    const context = useContext(AppContext);
+
+    useEffect(() => {
+        console.log('App context>',context);
+        if(context.user.id){
+            navigation.navigate('Home');
+        }
+    },[]);
     
     async function handleEntrar() {
         if (!usuario.email || !usuario.senha) {
@@ -20,7 +30,8 @@ export function Login({ navigation }) {
         const response = await Api.Login(usuario);
         console.log('Resp =>',response);
         if(response[0].id > 0){
-            navigation.navigate('Registro');
+            context.setUser(response[0]);
+            navigation.navigate('Home');
         }
     }
     return (

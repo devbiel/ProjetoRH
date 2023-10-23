@@ -2,8 +2,9 @@ import { StyleSheet, Text, View } from "react-native";
 import { ButtonRegistro, ButtonAction } from "../components/Buttons";
 import { FullDate, Subtitle } from "../components/Texts";
 import { Dh, Dw } from "../common/Func";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { Api } from "../api";
+import { AppContext } from '../context';
 
 
 const tipoRegistro = {
@@ -17,20 +18,23 @@ export function Registro({ navigation }) {
 
     const [registros, setRegistros] = useState();
     const [ultimoRegistro, setUltimoRegistro] = useState();
+    const [isLoading, setIsLoading] = useState(false);
+
+    const context = useContext(AppContext);
 
     useEffect(() => {
         loadRegistros();
     }, []);
 
     async function loadRegistros() {
-        const registrosResponse = await Api.ObterRegistros(1);
+        const registrosResponse = await Api.ObterRegistros(/*context.user.id*/1);
         setRegistros(registrosResponse);
-        console.log(registrosResponse);
         const ultimo = registrosResponse.sort((a, b) => b.tipoRegistro - a.tipoRegistro)[0];
         setUltimoRegistro(ultimo);
     }
 
     async function handleRegistrarPonto(tipo) {
+        setIsLoading(true);
         const registro = {
             usuarioId: 1,
             tipoRegistro: tipo
@@ -38,30 +42,31 @@ export function Registro({ navigation }) {
 
         await Api.RegistrarPonto(registro);
         loadRegistros();
+        setIsLoading(false);
     }
 
     return (
         <View style={styles.content}>
             <View style={styles.container}>
                 <FullDate />
-                <ButtonRegistro disabled={ultimoRegistro?.tipoRegistro >= tipoRegistro.Entrada} action={() => handleRegistrarPonto(tipoRegistro.Entrada)} text='Registrar Entrada' />
+                <ButtonRegistro disabled={isLoading || !!ultimoRegistro} action={() => handleRegistrarPonto(tipoRegistro.Entrada)} text='Registrar Entrada' />
                 {
-                    ultimoRegistro?.tipoRegistro >= tipoRegistro.Entrada && <Subtitle text={registros.find(registro => registro.tipoRegistro === tipoRegistro.Entrada)?.dataRegistro.substr(11,8)} />
+                    ultimoRegistro?.tipoRegistro >= tipoRegistro.Entrada && <Subtitle text={registros.find(registro => registro.tipoRegistro === tipoRegistro.Entrada)?.dataRegistro.substr(11,5)} />
                 }
 
-                <ButtonRegistro disabled={ultimoRegistro?.tipoRegistro >= tipoRegistro.SaidaAlmoco} action={() => handleRegistrarPonto(tipoRegistro.SaidaAlmoco)} text='Registrar Saída Almoço' />
+                <ButtonRegistro disabled={isLoading || ultimoRegistro?.tipoRegistro !== tipoRegistro.Entrada} action={() => handleRegistrarPonto(tipoRegistro.SaidaAlmoco)} text='Registrar Saída Almoço' />
                 {
-                    ultimoRegistro?.tipoRegistro >= tipoRegistro.SaidaAlmoco && <Subtitle text={registros.find(registro => registro.tipoRegistro === tipoRegistro.SaidaAlmoco)?.dataRegistro.substr(11,8)} />
+                    ultimoRegistro?.tipoRegistro >= tipoRegistro.SaidaAlmoco && <Subtitle text={registros.find(registro => registro.tipoRegistro === tipoRegistro.SaidaAlmoco)?.dataRegistro.substr(11,5)} />
                 }
 
-                <ButtonRegistro disabled={ultimoRegistro?.tipoRegistro >= tipoRegistro.VoltaAlmoco} action={() => handleRegistrarPonto(tipoRegistro.VoltaAlmoco)} text='Registrar Volta Almoço' />
+                <ButtonRegistro disabled={isLoading || ultimoRegistro?.tipoRegistro !== tipoRegistro.SaidaAlmoco} action={() => handleRegistrarPonto(tipoRegistro.VoltaAlmoco)} text='Registrar Volta Almoço' />
                 {
-                    ultimoRegistro?.tipoRegistro >= tipoRegistro.VoltaAlmoco && <Subtitle text={registros.find(registro => registro.tipoRegistro === tipoRegistro.VoltaAlmoco)?.dataRegistro.substr(11,8)} />
+                    ultimoRegistro?.tipoRegistro >= tipoRegistro.VoltaAlmoco && <Subtitle text={registros.find(registro => registro.tipoRegistro === tipoRegistro.VoltaAlmoco)?.dataRegistro.substr(11,5)} />
                 }
 
-                <ButtonRegistro disabled={ultimoRegistro?.tipoRegistro >= tipoRegistro.Saida} action={() => handleRegistrarPonto(tipoRegistro.Saida)} text='Registrar Saída' />
+                <ButtonRegistro disabled={isLoading || ultimoRegistro?.tipoRegistro !== tipoRegistro.VoltaAlmoco} action={() => handleRegistrarPonto(tipoRegistro.Saida)} text='Registrar Saída' />
                 {
-                    ultimoRegistro?.tipoRegistro >= tipoRegistro.Saida && <Subtitle text={registros.find(registro => registro.tipoRegistro === tipoRegistro.Saida)?.dataRegistro.substr(11,8)} />
+                    ultimoRegistro?.tipoRegistro >= tipoRegistro.Saida && <Subtitle text={registros.find(registro => registro.tipoRegistro === tipoRegistro.Saida)?.dataRegistro.substr(11,5)} />
                 }
 
             </View>

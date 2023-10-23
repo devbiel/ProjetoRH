@@ -12,9 +12,12 @@ export function Registrar() {
         senha: 'a',
         confirmarSenha: 'a',
         tipoUsuario: 1,
-    })
+    });
+
+    const [isLoading, setIsLoading] = useState(false);
 
     function handleRegistrar() {
+        setIsLoading(true);
         const { nome
             , email
             , senha
@@ -29,7 +32,9 @@ export function Registrar() {
             !tipoUsuario ||
             senha !== confirmarSenha
         ) {
-            console.log('Dados incorretos',usuario);
+            console.log('Dados incorretos', usuario);
+            setIsLoading(false);
+
             return;
         }
 
@@ -37,17 +42,19 @@ export function Registrar() {
         if (response) {
             navigation.navigate('Login');
         }
+        setIsLoading(false);
+
     }
 
     return (
         <View style={styles.container}>
             <View style={styles.content}>
-                <TextInput style={styles.input} placeholder='Nome' onChange={e => setUsuario(prev => ({ ...prev, nome: e.target.value }))} value={usuario.nome}/>
-                <TextInput style={styles.input} placeholder='E-mail' onChange={e => setUsuario(prev => ({ ...prev, email: e.target.value }))} value={usuario.email}/>
-                <TextInput style={styles.input} placeholder='Senha' onChange={e => setUsuario(prev => ({ ...prev, senha: e.target.value }))} value={usuario.senha}/>
-                <TextInput style={styles.input} placeholder='Confirmar Senha' onChange={e => setUsuario(prev => ({ ...prev, confirmarSenha: e.target.value }))} value={usuario.confirmarSenha}/>
-                <TextInput style={styles.input} placeholder='Tipo Usuário' onChange={e => setUsuario(prev => ({ ...prev, tipoUsuario: e.target.value }))} value={usuario.tipoUsuario}/>
-                <ButtonRegistro action={handleRegistrar} text='Registrar' />
+                <TextInput style={styles.input} placeholder='Nome' onChange={e => setUsuario(prev => ({ ...prev, nome: e.target.value }))} value={usuario.nome} />
+                <TextInput style={styles.input} placeholder='E-mail' onChange={e => setUsuario(prev => ({ ...prev, email: e.target.value }))} value={usuario.email} />
+                <TextInput style={styles.input} placeholder='Senha' onChange={e => setUsuario(prev => ({ ...prev, senha: e.target.value }))} value={usuario.senha} />
+                <TextInput style={styles.input} placeholder='Confirmar Senha' onChange={e => setUsuario(prev => ({ ...prev, confirmarSenha: e.target.value }))} value={usuario.confirmarSenha} />
+                <TextInput style={styles.input} placeholder='Tipo Usuário' onChange={e => setUsuario(prev => ({ ...prev, tipoUsuario: e.target.value }))} value={usuario.tipoUsuario} />
+                <ButtonRegistro disabled={isLoading} action={handleRegistrar} text='Registrar' />
 
             </View>
         </View>

@@ -8,6 +8,13 @@ module.exports = {
     login(usuario) {
         return db.login(usuario);
     },
+
+    alterarPonto(registros){
+        for(registro of registros){
+            db.alterarPonto(registro);
+        }
+        return "Ok";
+    },
     
     registrar(usuario) {
         return db.registrar(usuario);

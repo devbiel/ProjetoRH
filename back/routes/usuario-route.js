@@ -16,9 +16,14 @@ router.post('/registrar', async function (req, res) {
     return res.send(response)
 });
 
-
 router.post('/login', async function (req, res) {
     const response = await repository.login(req.body);
+    console.log('response:', response)
+    return res.send(response)
+});
+
+router.post('/alterar-ponto', async function (req, res) {
+    const response = await repository.alterarPonto(req.body);
     console.log('response:', response)
     return res.send(response)
 });

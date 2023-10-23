@@ -1,9 +1,9 @@
-import { Text, StyleSheet, View, TextInput } from "react-native";
+import { Alert, Text, StyleSheet, View, TextInput } from "react-native";
 import { Dh, Dw } from "../common/Func";
 import { ButtonRegistro, ButtonAction } from "../components/Buttons";
 import { RadioGroup } from "../components/Radio";
 import { Api } from "../api";
-import {useState} from 'react';
+import { useState } from 'react';
 
 const anos = [
     { value: 2020, text: '2020' },
@@ -32,16 +32,26 @@ export function FolhaPagamento() {
     const [ano, setAno] = useState(null);
     const [mes, setMes] = useState(null);
 
-    async function handleExport(){
+    async function handleExport() {
         const id = 1;
 
-        if(!ano || !mes){
+        if (!ano || !mes) {
             console.log('Ano ou mes não informados');
             return;
         }
-        const response = await Api.ObterPagamento(id,mes,ano);
-        console.log('pagto=>',response);
+        const response = await Api.ObterPagamento(id, mes, ano);
+        console.log('pagto=>', response);
     }
+
+        const handleAlert = () =>
+        Alert.alert('Alert Title', 'My Alert Msg', [
+          {
+            text: 'Cancel',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel',
+          },
+          {text: 'OK', onPress: () => console.log('OK Pressed')},
+        ]);
 
     return (
         <View style={styles.container}>
@@ -63,7 +73,7 @@ export function FolhaPagamento() {
                 <ButtonRegistro action={handleExport} text='Exportar PDF' />
             </View>
             <View style={styles.footer}>
-                <ButtonAction action={() => navigation.navigate('')} text='Ajuda' />
+                <ButtonAction action={handleAlert} text='Ajuda' />
                 <ButtonAction action={() => navigation.navigate('Home')} text='Voltar' />
             </View>
         </View>

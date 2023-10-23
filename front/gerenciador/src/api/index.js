@@ -8,7 +8,7 @@ const Config = {
                     status !== 204 && status !== 401 && status !== 400 && status !== 406
                 );
             },
-            baseURL: "http://localhost:3000/api/",
+            baseURL: "http://192.168.0.106:3000/api/",
             timeout: 120000,
             headers: {
                 Accept: "application/json",
@@ -34,7 +34,13 @@ export const Api = {
             .catch(e => e);
     },
 
-    
+    async AlterarPonto(registros) {
+        return await Config.Start()
+            .post('usuario/alterar-ponto', registros)
+            .then(res => res.data)
+            .catch(e => e);
+    },
+
     async Registrar(usuario) {
         return await Config.Start()
             .post('usuario/registrar', usuario)
