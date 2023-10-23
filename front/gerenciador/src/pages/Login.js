@@ -15,7 +15,6 @@ export function Login({ navigation }) {
     const context = useContext(AppContext);
 
     useEffect(() => {
-        console.log('App context>',context);
         if(context.user.id){
             navigation.navigate('Home');
         }

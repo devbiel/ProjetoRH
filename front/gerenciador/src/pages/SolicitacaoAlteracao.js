@@ -15,7 +15,7 @@ export function SolicitacaoAlteracao({ navigation }) {
     }, []);
 
     async function loadRegistros() {
-        const registrosResponse = await Api.ObterRegistros(1);
+        const registrosResponse = await Api.ObterRegistros(context.user.id);
         const _registros = registrosResponse.map(r => ({
             id: r.id,
             usuarioId: r.usuarioId,
