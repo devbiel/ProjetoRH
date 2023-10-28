@@ -36,7 +36,7 @@ export function Registro({ navigation }) {
     async function handleRegistrarPonto(tipo) {
         setIsLoading(true);
         const registro = {
-            usuarioId: 1,
+            usuarioId: context.user.id,
             tipoRegistro: tipo
         }
 

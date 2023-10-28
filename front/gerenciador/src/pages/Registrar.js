@@ -7,10 +7,10 @@ import { ButtonRegistro, ButtonAction } from "../components/Buttons";
 
 export function Registrar() {
     const [usuario, setUsuario] = useState({
-        nome: 'a',
-        email: 'a',
-        senha: 'a',
-        confirmarSenha: 'a',
+        nome: '',
+        email: '',
+        senha: '',
+        confirmarSenha: '',
         tipoUsuario: 1,
     });
 

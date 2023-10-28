@@ -35,32 +35,37 @@ export function FolhaPagamento({ navigation }) {
     const [ano, setAno] = useState(null);
     const [mes, setMes] = useState(null);
     const [pagamentoDetalhes, setPagamentoDetalhes] = useState({
-        id:0,
+        id: 0,
         nome: '0',
         email: '0',
         tipo: '0',
         dataPagamento: null,
         valorPagamento: 0,
         handleClose: () => handleClose(false),
-        isOpen: true,
+        isOpen: false,
     })
 
     async function handleExport() {
-        const id = 1; //context.user.id
+        const id = context.user.id;
 
         if (!ano || !mes) {
-            console.log('Ano ou mes não informados');
+            handleAlert({ message: 'Ano ou mes não informados.', color: '#dd4444' })
             return;
         }
         const response = await Api.ObterPagamento(id, mes, ano);
         console.log('pagto=>', response);
-        setPagamentoDetalhes({...pagamentoDetalhes,...response})
-        handleClose(true);
+        setPagamentoDetalhes({ ...pagamentoDetalhes, ...response });
+        if (response?.valorPagamento > 0) {
+            handleClose(true);
+        } else {
+            handleAlert({ message: 'Sem registros para a data informada.', color: '#dd4444' })
+        }
     }
 
-    const handleAlert = () =>
+    const handleAlert = ( config ) =>
         context.onChangeTape({
-            message: 'Por favor, entre em contato com o RH.'
+            message: config?.message || 'Por favor, entre em contato com o RH.',
+            color: config?.color
         });
 
     const handleClose = (value) => setPagamentoDetalhes(prev => ({ ...prev, isOpen: value }));
@@ -134,7 +139,7 @@ const styles = StyleSheet.create({
 })
 
 export function PagamentoDetalhes(pagamento) {
-    const {id, nome, email, tipo, dataPagamento, valorPagamento } = pagamento;
+    const { id, nome, email, tipo, dataPagamento, valorPagamento } = pagamento;
 
     async function handlePrint() {
         try {

@@ -21,8 +21,8 @@ export function SolicitacaoAlteracao({ navigation }) {
             usuarioId: r.usuarioId,
             tipoRegistro: r.tipoRegistro,
             dataRegistro: r.dataRegistro,
-            hora: (new Date(r.dataRegistro))?.getHours(),
-            minuto: (new Date(r.dataRegistro))?.getMinutes()
+            hora: r.horaRegistro,
+            minuto: r.minutoRegistro,
         }));
 
         setRegistros(_registros);
