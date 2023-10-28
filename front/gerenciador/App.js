@@ -61,12 +61,12 @@ export default function App() {
       <AppContext.Provider value={{ user: user, setUser: setUser, onChangeTape: onChangeTape }}>
         <NavigationContainer theme={Theme}>
           <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="FolhaPagamento" component={FolhaPagamento} />
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="Registrar" component={Registrar} />
             <Stack.Screen name="Home" component={Home} />
             <Stack.Screen name="SolicitacaoAlteracao" component={SolicitacaoAlteracao} />
             <Stack.Screen name="Registro" component={Registro} />
-            <Stack.Screen name="FolhaPagamento" component={FolhaPagamento} />
           </Stack.Navigator>
         </NavigationContainer>
       </AppContext.Provider>

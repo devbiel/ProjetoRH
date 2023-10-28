@@ -28,7 +28,6 @@ export function Login({ navigation }) {
             }
 
             const response = await Api.Login(usuario);
-            console.log('Resp =>', response);
             if (response[0].id > 0) {
                 context.setUser(response[0]);
                 navigation.navigate('Home');
