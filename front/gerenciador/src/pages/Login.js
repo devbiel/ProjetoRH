@@ -1,4 +1,4 @@
-import { useEffect, useState,useContext } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { TextInput } from 'react-native';
 import { StyleSheet, View } from 'react-native';
 import { Api } from '../api';
@@ -11,26 +11,33 @@ export function Login({ navigation }) {
         email: '',
         senha: '',
     });
-    
+
     const context = useContext(AppContext);
 
     useEffect(() => {
-        if(context.user.id){
+        if (context.user.id) {
             navigation.navigate('Home');
         }
-    },[]);
-    
-    async function handleEntrar() {
-        if (!usuario.email || !usuario.senha) {
-            console.log('Dados não informados')
-            return;
-        }
+    }, []);
 
-        const response = await Api.Login(usuario);
-        console.log('Resp =>',response);
-        if(response[0].id > 0){
-            context.setUser(response[0]);
-            navigation.navigate('Home');
+    async function handleEntrar() {
+        try {
+            if (!usuario.email || !usuario.senha) {
+                console.log('Dados não informados')
+                return;
+            }
+
+            const response = await Api.Login(usuario);
+            console.log('Resp =>', response);
+            if (response[0].id > 0) {
+                context.setUser(response[0]);
+                navigation.navigate('Home');
+            }
+        }
+        catch (err) {
+            context.onChangeTape({
+                message: 'Erro no login: ' + err,
+            })
         }
     }
     return (
@@ -50,9 +57,9 @@ const styles = StyleSheet.create({
         height: Dh,
         paddingBottom: 20,
         paddingTop: 20,
-        flexDirection:'row',
+        flexDirection: 'row',
         alignItems: 'center',
-        justifyContent:'center',
+        justifyContent: 'center',
     },
     content: {
         flex: 1,
@@ -64,7 +71,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         height: 30,
         borderRadius: 5,
-        marginBottom:20,
-        paddingLeft:10,
+        marginBottom: 20,
+        paddingLeft: 10,
     },
 })

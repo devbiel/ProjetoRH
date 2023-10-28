@@ -3,7 +3,8 @@ import { Dh, Dw } from "../common/Func";
 import { ButtonRegistro, ButtonAction } from "../components/Buttons";
 import { RadioGroup } from "../components/Radio";
 import { Api } from "../api";
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { AppContext } from '../context';
 
 const anos = [
     { value: 2020, text: '2020' },
@@ -27,7 +28,8 @@ const meses = [
     { value: 12, text: 'Dezembro' },
 ];
 
-export function FolhaPagamento() {
+export function FolhaPagamento({ navigation }) {
+    const context = useContext(AppContext);
 
     const [ano, setAno] = useState(null);
     const [mes, setMes] = useState(null);
@@ -43,15 +45,10 @@ export function FolhaPagamento() {
         console.log('pagto=>', response);
     }
 
-        const handleAlert = () =>
-        Alert.alert('Alert Title', 'My Alert Msg', [
-          {
-            text: 'Cancel',
-            onPress: () => console.log('Cancel Pressed'),
-            style: 'cancel',
-          },
-          {text: 'OK', onPress: () => console.log('OK Pressed')},
-        ]);
+    const handleAlert = () =>
+        context.onChangeTape({
+            message: 'Por favor, entre em contato com o RH.'
+        });
 
     return (
         <View style={styles.container}>

@@ -67,6 +67,11 @@ export function SolicitacaoAlteracao({ navigation }) {
         return !registro?.tipoRegistro;
     }
 
+    const handleAlert = () =>
+        context.onChangeTape({
+            message: 'Por favor, entre em contato com o RH.'
+        });
+
     return (
         <View style={styles.content}>
             <View style={styles.container}>
@@ -144,7 +149,7 @@ export function SolicitacaoAlteracao({ navigation }) {
             </View>
             <View style={styles.footer}>
                 <ButtonAction action={() => navigation.navigate('Home')} text='Voltar' />
-                <ButtonAction action={() => { }} text='Ajuda' />
+                <ButtonAction action={handleAlert} text='Ajuda' />
                 <ButtonAction action={handleSalvar} text='Salvar' />
             </View>
 

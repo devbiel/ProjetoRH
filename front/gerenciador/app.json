@@ -25,6 +25,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "e0565553-a7ff-4e6b-b923-5f9daa859801"
+      }
+    },
+    "owner": "jeff_ti"
   }
 }
