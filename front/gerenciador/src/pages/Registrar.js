@@ -5,7 +5,7 @@ import { Api } from '../api';
 import { Dh, Dw } from "../common/Func";
 import { ButtonRegistro, ButtonAction } from "../components/Buttons";
 
-export function Registrar() {
+export function Registrar({navigation}) {
     const [usuario, setUsuario] = useState({
         nome: '',
         email: '',
@@ -49,12 +49,13 @@ export function Registrar() {
     return (
         <View style={styles.container}>
             <View style={styles.content}>
-                <TextInput style={styles.input} placeholder='Nome' onChange={e => setUsuario(prev => ({ ...prev, nome: e.target.value }))} value={usuario.nome} />
-                <TextInput style={styles.input} placeholder='E-mail' onChange={e => setUsuario(prev => ({ ...prev, email: e.target.value }))} value={usuario.email} />
-                <TextInput style={styles.input} placeholder='Senha' onChange={e => setUsuario(prev => ({ ...prev, senha: e.target.value }))} value={usuario.senha} />
-                <TextInput style={styles.input} placeholder='Confirmar Senha' onChange={e => setUsuario(prev => ({ ...prev, confirmarSenha: e.target.value }))} value={usuario.confirmarSenha} />
-                <TextInput style={styles.input} placeholder='Tipo Usuário' onChange={e => setUsuario(prev => ({ ...prev, tipoUsuario: e.target.value }))} value={usuario.tipoUsuario} />
+                <TextInput style={styles.input} placeholder='Nome' onChange={e => setUsuario(prev => ({ ...prev, nome: e.nativeEvent?.text || '' }))} value={usuario.nome} />
+                <TextInput style={styles.input} placeholder='E-mail' onChange={e => setUsuario(prev => ({ ...prev, email: e.nativeEvent?.text || '' }))} value={usuario.email} />
+                <TextInput style={styles.input} placeholder='Senha' onChange={e => setUsuario(prev => ({ ...prev, senha: e.nativeEvent?.text || '' }))} value={usuario.senha} />
+                <TextInput style={styles.input} placeholder='Confirmar Senha' onChange={e => setUsuario(prev => ({ ...prev, confirmarSenha: e.nativeEvent?.text || '' }))} value={usuario.confirmarSenha} />
+                <TextInput style={styles.input} placeholder='Tipo Usuário' onChange={e => setUsuario(prev => ({ ...prev, tipoUsuario: e.nativeEvent?.text || '' }))} value={usuario.tipoUsuario} />
                 <ButtonRegistro disabled={isLoading} action={handleRegistrar} text='Registrar' />
+                <ButtonRegistro disabled={isLoading} action={() => navigation.navigate('Login')} text='Voltar' />
 
             </View>
         </View>

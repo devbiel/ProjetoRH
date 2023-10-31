@@ -9,7 +9,7 @@ const Config = {
                 );
             },
             baseURL: "http://192.168.0.106:3000/api/",
-            timeout: 120000,
+            timeout: 10000,
             headers: {
                 Accept: "application/json",
                 "Content-Type": "application/json"

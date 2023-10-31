@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { StyleSheet, Text, View, TextInput } from "react-native";
+import { StyleSheet, Text, View, TextInput, Pressable, Keyboard } from "react-native";
 import { ButtonRegistro, ButtonAction } from "../components/Buttons";
 import { FullDate, Subtitle } from "../components/Texts";
 import { Dh, Dw } from "../common/Func";
@@ -79,20 +79,20 @@ export function SolicitacaoAlteracao({ navigation }) {
                 {
                     registros?.length
                     ? (
-                        <>
+                        <Pressable onPress={Keyboard.dismiss}>
                             <ButtonRegistro action={() => { }} text='Solicitar Alteração Entrada' />
                             <View style={styles.row}>
                                 <TextInput readOnly={isReadyOnly(1)}
                                     inputMode={'numeric'}
                                     style={styles.inputHora}
                                     value={getHora(1)}
-                                    onChange={e => handleSetHora(e.target.value, 1)}
+                                    onChange={e => handleSetHora(e.nativeEvent?.text || '', 1)}
                                 />
                                 <TextInput readOnly={isReadyOnly(1)}
                                     inputMode={'numeric'}
                                     style={styles.inputHora}
                                     value={getMinutos(1)}
-                                    onChange={e => handleSetMinutos(e.target.value, 1)}
+                                    onChange={e => handleSetMinutos(e.nativeEvent?.text || '', 1)}
                                 />
                             </View>
 
@@ -102,13 +102,13 @@ export function SolicitacaoAlteracao({ navigation }) {
                                     inputMode={'numeric'}
                                     style={styles.inputHora}
                                     value={getHora(2)}
-                                    onChange={e => handleSetHora(e.target.value, 2)}
+                                    onChange={e => handleSetHora(e.nativeEvent?.text || '', 2)}
                                 />
                                 <TextInput readOnly={isReadyOnly(2)}
                                     inputMode={'numeric'}
                                     style={styles.inputHora}
                                     value={getMinutos(2)}
-                                    onChange={e => handleSetMinutos(e.target.value, 2)}
+                                    onChange={e => handleSetMinutos(e.nativeEvent?.text || '', 2)}
                                 />
                             </View>
 
@@ -118,13 +118,13 @@ export function SolicitacaoAlteracao({ navigation }) {
                                     inputMode={'numeric'}
                                     style={styles.inputHora}
                                     value={getHora(3)}
-                                    onChange={e => handleSetHora(e.target.value, 3)}
+                                    onChange={e => handleSetHora(e.nativeEvent?.text || '', 3)}
                                 />
                                 <TextInput readOnly={isReadyOnly(3)}
                                     inputMode={'numeric'}
                                     style={styles.inputHora}
                                     value={getMinutos(3)}
-                                    onChange={e => handleSetMinutos(e.target.value, 3)}
+                                    onChange={e => handleSetMinutos(e.nativeEvent?.text || '', 3)}
                                 />
                             </View>
 
@@ -134,16 +134,16 @@ export function SolicitacaoAlteracao({ navigation }) {
                                     inputMode={'numeric'}
                                     style={styles.inputHora}
                                     value={getHora(4)}
-                                    onChange={e => handleSetHora(e.target.value, 4)}
+                                    onChange={e => handleSetHora(e.nativeEvent?.text || '', 4)}
                                 />
                                 <TextInput readOnly={isReadyOnly(4)}
                                     inputMode={'numeric'}
                                     style={styles.inputHora}
                                     value={getMinutos(4)}
-                                    onChange={e => handleSetMinutos(e.target.value, 4)}
+                                    onChange={e => handleSetMinutos(e.nativeEvent?.text || '', 4)}
                                 />
                             </View>
-                        </>
+                        </Pressable>
                     ):null
                 }
             </View>

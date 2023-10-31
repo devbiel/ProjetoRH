@@ -12,13 +12,14 @@ export function Tape(props) {
 const styles = StyleSheet.create({
     container: {
         width: Dw,
-        height: Dh * .08,
+        height: Dh * .1,
         position: 'absolute',
         top: 0,
         zIndex: 10,
         textAlign: 'center',
         alignItems: 'center',
         justifyContent: 'center',
+        paddingTop: Dh * .02,
         paddingLeft:10,
         paddingRight:10,
     },

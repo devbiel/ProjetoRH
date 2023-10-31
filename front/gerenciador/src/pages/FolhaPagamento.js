@@ -1,4 +1,4 @@
-import { Alert, Text, StyleSheet, View, TextInput } from "react-native";
+import { Alert, Text, StyleSheet, View } from "react-native";
 import { Dh, Dw } from "../common/Func";
 import { ButtonRegistro, ButtonAction } from "../components/Buttons";
 import { RadioGroup } from "../components/Radio";

@@ -29,8 +29,10 @@ export function Registro({ navigation }) {
     async function loadRegistros() {
         const registrosResponse = await Api.ObterRegistros(context.user.id);
         setRegistros(registrosResponse);
-        const ultimo = registrosResponse.sort((a, b) => b.tipoRegistro - a.tipoRegistro)[0];
-        setUltimoRegistro(ultimo);
+        if(registrosResponse.length > 0){
+            const ultimo = registrosResponse.sort((a, b) => b.tipoRegistro - a.tipoRegistro)[0];
+            setUltimoRegistro(ultimo);
+        }
     }
 
     async function handleRegistrarPonto(tipo) {

@@ -2,10 +2,6 @@ import { View, Text, StyleSheet } from 'react-native';
 import { ButtonRegistro } from "../components/Buttons";
 import { Dh } from '../common/Func';
 
-/*
-TODO: Ajuda -> Entre em contato com o RH
-*/
-
 export function Home({ navigation }) {
     return (
         <View style={styles.container}>

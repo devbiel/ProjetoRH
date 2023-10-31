@@ -7,6 +7,7 @@ import { ButtonRegistro, ButtonAction } from "../components/Buttons";
 import { AppContext } from '../context';
 
 export function Login({ navigation }) {
+    const [loading, setLoading] = useState(false);
     const [usuario, setUsuario] = useState({
         email: '',
         senha: '',
@@ -21,9 +22,11 @@ export function Login({ navigation }) {
     }, []);
 
     async function handleEntrar() {
+        setLoading(true);
         try {
             if (!usuario.email || !usuario.senha) {
-                console.log('Dados não informados')
+                context.onChangeTape({ message: 'Dados não informados', color: '#CC0000' });
+                setLoading(false);
                 return;
             }
 
@@ -32,19 +35,25 @@ export function Login({ navigation }) {
                 context.setUser(response[0]);
                 navigation.navigate('Home');
             }
+            setLoading(false);
         }
         catch (err) {
             context.onChangeTape({
                 message: 'Erro no login: ' + err,
             })
+            setLoading(false);
         }
     }
     return (
         <View style={styles.container}>
             <View style={styles.content}>
-                <TextInput value={usuario.email} style={styles.input} placeholder='E-mail' onChange={e => setUsuario(prev => ({ ...prev, email: e.target.value }))} />
-                <TextInput value={usuario.senha} secureTextEntry='*' style={styles.input} placeholder='Senha' onChange={e => setUsuario(prev => ({ ...prev, senha: e.target.value }))} />
-                <ButtonRegistro action={handleEntrar} text='Entrar' />
+                <TextInput value={usuario.email} style={styles.input} placeholder='E-mail'
+                    onChange={e => setUsuario(prev => ({ ...prev, email: e.nativeEvent?.text || '' }))}
+                />
+                <TextInput value={usuario.senha} secureTextEntry={true} style={styles.input} placeholder='Senha'
+                    onChange={e => setUsuario(prev => ({ ...prev, senha: e.nativeEvent?.text || '' }))}
+                />
+                <ButtonRegistro action={handleEntrar} text={loading ? 'Entrando...' : 'Entrar'} disabled={loading} />
                 <ButtonAction action={() => navigation.navigate('Registrar')} text='Registrar' />
             </View>
         </View>
